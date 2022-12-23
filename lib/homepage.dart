@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp_sqflite/addpage.dart';
 import 'package:todoapp_sqflite/database.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,6 +12,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>> todolist = [];
+
+  void addTodo() async {
+    final route = MaterialPageRoute(
+      builder: (context) => const AddPage(),
+    );
+    await Navigator.push(context, route);
+    _getData();
+  }
 
   void _getData() async {
     final todo = await Database.getTodos();
@@ -56,7 +65,9 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) => const AddPage()
+          ));
         },
         child: const Icon(Icons.add),
       ),
