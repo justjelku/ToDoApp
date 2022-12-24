@@ -27,6 +27,14 @@ class _HomePageState extends State<HomePage> {
       todolist = todo;
     });
   }
+  void deleteTodo(int id) {
+    Database.deleteTodo(id);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Successfully deleted!'),
+        backgroundColor: Colors.green)
+    );
+    _getData();
+  }
   @override
   void initState() {
     super.initState();
@@ -42,24 +50,34 @@ class _HomePageState extends State<HomePage> {
       body: ListView.builder(
         itemCount: todolist.length,
         itemBuilder: (context, index){
-          return ListTile(
-              leading: CircleAvatar(child: Text(todolist[index]['id'].toString())),
-              title: Text(todolist[index]['title'],
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.black
+
+          return Dismissible(
+              key: UniqueKey(),
+              background: slidelefttodelete(),
+              onDismissed: (direction) async {
+                setState ((){
+                  deleteTodo(todolist[index]['id']);
+                });
+              },
+              child: ListTile(
+                leading: CircleAvatar(child: Text(todolist[index]['id'].toString())),
+                title: Text(todolist[index]['title'],
+                  style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.black
+                  ),
                 ),
-              ),
-              subtitle: Text(todolist[index]['description'],
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.black
+                subtitle: Text(todolist[index]['description'],
+                  style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black
+                  ),
                 ),
-              ),
-              trailing: const Icon(
-                Icons.edit,
-                color: Colors.green
-              ),
+                trailing: const Icon(
+                    Icons.edit,
+                    color: Colors.green
+                ),
+              )
           );
         }
       ),
@@ -70,6 +88,28 @@ class _HomePageState extends State<HomePage> {
           ));
         },
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+  Widget slidelefttodelete() {
+    return Container(
+      color: Colors.red,
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const <Widget>[
+            Text(
+              " Delete todo",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(width: 20),
+          ],
+        ),
       ),
     );
   }

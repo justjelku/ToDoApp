@@ -12,7 +12,6 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> {
   List<Map<String, dynamic>> todolist = [];
-  // List todoList = [];
 
   final formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
