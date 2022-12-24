@@ -10,6 +10,13 @@ class Todo {
     required this.description,
   });
 
+  Todo.withId({
+    required this.id,
+    required this.title,
+    required this.description,
+  });
+
+
 
   Map<String, dynamic> toMap() {
     return {

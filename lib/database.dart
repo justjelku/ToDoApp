@@ -22,9 +22,13 @@ class Database {
   static Future<int> createTodo(String? title, String? description) async {
     final db = await Database.db();
 
-    final data = {'title': title, 'description': description};
+    final data = {
+      'title': title,
+      'description': description
+    };
     final id = await db.insert('todolist', data,
-        conflictAlgorithm: sql.ConflictAlgorithm.replace);
+        conflictAlgorithm: sql.ConflictAlgorithm.replace
+    );
     return id;
   }
   // Read all items
