@@ -35,6 +35,14 @@ class _HomePageState extends State<HomePage> {
     );
     _getData();
   }
+  void editTodo(Map item) async {
+    final route = MaterialPageRoute(
+      builder: (context) => AddPage(todo: item),
+    );
+    await Navigator.push(context, route);
+    _getData();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -72,11 +80,17 @@ class _HomePageState extends State<HomePage> {
                       fontSize: 16,
                       color: Colors.black
                   ),
+
                 ),
                 trailing: const Icon(
                     Icons.edit,
                     color: Colors.green
                 ),
+                onTap: (){
+                  setState(() {
+                    editTodo;
+                  });
+                },
               )
           );
         }
